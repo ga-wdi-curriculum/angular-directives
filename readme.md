@@ -8,15 +8,18 @@
 - Use `link` method to set scope
 - Explain the difference between `@` and `=` in `scope` object
 
-[Starter Code](https://github.com/ga-dc/grumblr_angular/tree/resource-solution) |
-[Solution Code](https://github.com/ga-dc/grumblr_angular/releases/tag/3.0.1)
+[Starter Code](https://github.com/ga-wdi-exercises/grumblr_angular/tree/resource-solution) |
+[Solution Code](https://github.com/ga-wdi-exercises/grumblr_angular/releases/tag/3.0.1)
 
 ```
-$ git fetch
+$ git clone https://github.com/ga-wdi-exercises/grumblr_angular.git
+$ cd grumblr_angular
 $ git checkout resource-solution
+$ hs
+# visit http://localhost:8080/#/grumbles in browser
 ```
 
-Make sure the local api is running at localhost:3000 - https://github.com/ga-dc/grumblr_rails_api
+Make sure the local api is running at localhost:3000 - https://github.com/ga-wdi-exercises/grumblr_rails_api
 
 ### You do:
 
@@ -30,11 +33,15 @@ Our focus is going to be...
 
 ##### What HTML isn't DRY?
 
-The `index` and `show` pages have almost identical HTML, as do the `new` and `edit` pages.
+The `index` and `show` pages have almost identical HTML, as do the `new` and
+`edit` pages.
 
 ##### Why would we want to DRY the HTML?
 
-Continuity across an app is a big part of UX. If a Grumble appears one way on one page, and another way on another page, that creates confusion for users. To that end, we can copy and paste HTML from one view to another, but when inevitably we want to change that HTML, it means copying and pasting again.
+Continuity across an app is a big part of UX. If a Grumble appears one way on
+one page, and another way on another page, that creates confusion for users. To
+that end, we can copy and paste HTML from one view to another, but when
+inevitably we want to change that HTML, it means copying and pasting again.
 
 We're going to do this with...
 
@@ -42,21 +49,26 @@ We're going to do this with...
 
 ##### What are some *standard* directives we've seen so far?
 
-We've seen a lot of attributes: `ng-repeat`, `ng-app`, and so on. But directives can also be entire elements. Angular lets you create, say, `<grumble>` and `<comment>`.
+We've seen a lot of attributes: `ng-repeat`, `ng-app`, and so on. But directives
+can also be entire elements. Angular lets you create, say, `<grumble>` and
+`<comment>`.
 
 ##### So what *is* a directive, anyway?
 
-Basically, a directive is some HTML defined by Angular. A directive can be an attribute, an element, a class, or even a comment.
+Basically, a directive is some HTML defined by Angular. A directive can be an
+attribute, an element, a class, or even a comment.
 
-All HTML elements have behaviors: anchors take you to a page when you click on them, textareas let you write stuff inside them, and so on. Angular lets you create your own HTML elements and give them behaviors you define.
+All HTML elements have behaviors: anchors take you to a page when you click on
+them, textareas let you write stuff inside them, and so on. Angular lets you
+create your own HTML elements and give them behaviors you define.
 
-Ever wished there was a `<comment-box>` or a `<random-bill-murray-img>` element? Now you can make one.
+Ever wished there was a `<comment-box>` or a `<random-bill-murray-img>` element?
+Now you can make one.
 
-One of Angular's sort-of 'mission statements' is 'to be what HTML would have been if it was designed from the start with web apps in mind.'
+One of Angular's sort-of 'mission statements' is 'to be what HTML would have
+been if it was designed from the start with web apps in mind.'
 
 ### You can think of directives as 'Angular elements'
-
-To help me keep straight what Angular's terms mean, I made a [cheat sheet of which Angular terms map to which Rails terms](../angular-vs-rails.md).
 
 Directives are most like helpers in Rails.
 
@@ -70,7 +82,8 @@ They all add HTML to a view.
 
 ### 'But what about separating my concerns?'
 
-You're discouraged from using the `onclick=` attribute, and now all of a sudden you're being told to use `ng-click=`?
+You're discouraged from using the `onclick=` attribute, and now all of a sudden
+you're being told to use `ng-click=`?
 
 ##### Why is this bad?
 
@@ -79,8 +92,12 @@ You're discouraged from using the `onclick=` attribute, and now all of a sudden 
 I can think of a few reasons:
 
 1. We don't have to put event listeners everywhere
-- It makes the HTML easier to read, whereas in Backbone templates are sort of strewn about and it's not so easy to see which goes where
-- It makes the HTML make *more sense*, somehow. HTML is meant to tell you the function of content, and this lets you be much more specific about that function. It's (theoretically) easier to read than Javascript, and it's more useful than just defining semantics.
+- It makes the HTML easier to read, whereas in Backbone templates are sort of
+strewn about and it's not so easy to see which goes where
+- It makes the HTML make *more sense*, somehow. HTML is meant to tell you the
+function of content, and this lets you be much more specific about that
+function. It's (theoretically) easier to read than Javascript, and it's more
+useful than just defining semantics.
 
 ### Custom directives are the 'flagship' of Angular
 
@@ -90,7 +107,7 @@ So: let's make one!
 
 ## Grumble `show`
 
-Make sure the local api is running at localhost:3000 - https://github.com/ga-dc/grumblr_rails_api
+Make sure the local api is running at localhost:3000 - https://github.com/ga-wdi-exercises/grumblr_rails_api
 
 - In `js/grumbles/index.html`, add this custom directive: `<my-custom-directive></my-custom-directive>`. Refresh the page, and you shouldn't see any changes.  The new directive doesn't do anything... yet.
 
@@ -126,13 +143,15 @@ Make sure the local api is running at localhost:3000 - https://github.com/ga-dc/
 })();
 ```
 
-- Finally, include `<script src='js/grumbles/grumble.directive.js'></script>` in the app's main `index.html`.
+- Finally, include `<script src='js/grumbles/grumble.directive.js'></script>`
+in the app's main `index.html`.
 
 ...and that's it! Run it, and see what happens.
 
 ## Directive options
 
-Directives can be given a parameter called `link`. It'll automatically be run every time an instance of that directive is created.
+Directives can be given a parameter called `link`. It'll automatically be run
+every time an instance of that directive is created.
 
 For example:
 
@@ -151,11 +170,18 @@ For example:
 })();
 ```
 
-Now my console will print `directive used` once for every instance of `<my-custom-directive>` on a page. So on the `index` page, if there are 10 Grumbles, and I put `<my-custom-directive>` inside `ng-repeat`, `ng-repeat` will duplicate this directive 10 times, and I should see `hello` 10 times.
+Now my console will print `directive used` once for every instance of
+`<my-custom-directive>` on a page. So on the `index` page, if there are 10
+Grumbles, and I put `<my-custom-directive>` inside `ng-repeat`, `ng-repeat`
+will duplicate this directive 10 times, and I should see `hello` 10 times.
 
-Angular actually passes into this `link` function an argument called `scope`. This is an object that's available **both in the directive's JS and the directive's HTML**. So anything I add to it in the JS will be available in the HTML, and vice-versa.
+Angular actually passes into this `link` function an argument called `scope`.
+This is an object that's available **both in the directive's JS and the
+directive's HTML**. So anything I add to it in the JS will be available in the
+HTML, and vice-versa.
 
-For instance, I'm going to add a property called `myName` to `scope`. That will let me show the value of `myName` in the HTML.
+For instance, I'm going to add a property called `myName` to `scope`. That will
+let me show the value of `myName` in the HTML.
 
 ```js
 (function(){
@@ -174,7 +200,8 @@ For instance, I'm going to add a property called `myName` to `scope`. That will 
 
 ### Directive methods
 
-You can add entire methods to scope and make those available in your HTML. I'll make a method that alerts my name:
+You can add entire methods to scope and make those available in your HTML. I'll
+make a method that alerts my name:
 
 ```js
 (function(){
@@ -196,19 +223,23 @@ You can add entire methods to scope and make those available in your HTML. I'll 
 
 ### Directive collisions
 
-Check out what happens when I have an element called `my-custom-directive` with an attribute called `my-custom-directive`:
+Check out what happens when I have an element called `my-custom-directive` with
+an attribute called `my-custom-directive`:
 
 ```html
 <my-custom-directive data-my-custom-directive></my-custom-directive>
 ```
 
-I get a `$compile:multidir` error, which means Angular's telling me, "Hey, you're trying to apply the same directive twice to one element.
+I get a `$compile:multidir` error, which means Angular's telling me, "Hey,
+you're trying to apply the same directive twice to one element.
 
-You can fix this by telling Angular whether the *element* is the directive, or the *attribute* is the directive.
+You can fix this by telling Angular whether the *element* is the directive, or
+the *attribute* is the directive.
 
 ## What kind of directive do you want?
 
-By default, Angular makes every custom directive available as both an element and an attribute. It considers these to be the same:
+By default, Angular makes every custom directive available as both an element
+and an attribute. It considers these to be the same:
 
 ```html
 <my-custom-directive></my-custom-directive>
@@ -217,7 +248,10 @@ By default, Angular makes every custom directive available as both an element an
 
 ### Restricting your directive type
 
-If you only want your directive to be available as an element, you add `restrict: 'E'` to your directive. This will make angular use the `my-custom-directive` *element* and ignore the `my-custom-directive` attribute. If I add `restrict: 'A'`, it does the opposite.
+If you only want your directive to be available as an element, you add
+`restrict: 'E'` to your directive. This will make angular use the
+`my-custom-directive` *element* and ignore the `my-custom-directive` attribute.
+If I add `restrict: 'A'`, it does the opposite.
 
 ```js
 (function(){
@@ -238,7 +272,9 @@ If you only want your directive to be available as an element, you add `restrict
 })();
 ```
 
-I mentioned before that custom directives can be elements, attibutes, comments, or classes. If you're looking for a mnemonic by which to remember these, use `MACE`: coMment, Attribute, Class, Element.
+I mentioned before that custom directives can be elements, attibutes, comments,
+or classes. If you're looking for a mnemonic by which to remember these, use
+`MACE`: coMment, Attribute, Class, Element.
 
 So `restrict: 'C'` would make this work:
 
@@ -246,7 +282,8 @@ So `restrict: 'C'` would make this work:
 <div class='my-custom-directive'></div>
 ```
 
-You could do `restrict: 'M'` to make your directive availble as a comment. However, comments don't actually render any HTML. For instance:
+You could do `restrict: 'M'` to make your directive availble as a comment.
+However, comments don't actually render any HTML. For instance:
 
 ```
 <!-- directive:my-custom-directive -->
@@ -254,7 +291,8 @@ You could do `restrict: 'M'` to make your directive availble as a comment. Howev
 
 I still see the `console.log` happening, but that's it.
 
-If you want your directive to be availble as any of the four options, you add `restrict:'MACE'` to your directive, and you can use any combination in between.
+If you want your directive to be available as any of the four options, you add
+`restrict:'MACE'` to your directive, and you can use any combination in between.
 
 ##### I mentioned that by default Angular lets you use a custom directive as an element or an attribute. This means the default value of `restrict` is what?
 
@@ -291,7 +329,8 @@ If my directive looks like this:
 </div>
 ```
 
-I can add `replace: true` and that will have my template *replace* the element that calls my directive:
+I can add `replace: true` and that will have my template *replace* the element
+that calls my directive:
 
 ```js
 (function(){
@@ -319,7 +358,9 @@ I can add `replace: true` and that will have my template *replace* the element t
 
 ## Attributes
 
-So far we've seen a bunch of ways of getting things *out* of the Javascript and *into* the HTML. But how do we get things out of the HTML and into the Javascript?
+So far we've seen a bunch of ways of getting things *out* of the Javascript
+and *into* the HTML. But how do we get things out of the HTML and into the
+Javascript?
 
 We do so using attributes:
 
@@ -347,13 +388,16 @@ We do so using attributes:
 })();
 ```
 
-We'll get to the `@` in a bit. Note that Angular automatically turned `some-attribute` from spine-case to camelCase.
+We'll get to the `@` in a bit. Note that Angular automatically turned
+`some-attribute` from spine-case to camelCase.
 
-This is **extremely useful** because it gives you a way of passing data directly into your directive via the attribute.
+This is **extremely useful** because it gives you a way of passing data
+directly into your directive via the attribute.
 
 ### A note about attributes and validating your HTML
 
-**Why would you want to validate your HTML in the first place?** Aren't we kind-of-past that? Angular can break really easily when, say, you forget a closing `</div>` tag.
+**Why would you want to validate your HTML in the first place?** Aren't we
+kind-of-past that? Angular can break really easily when, say, you forget a closing `</div>` tag.
 
 Check out what happens when I run the HTML validator with this code inside it:
 
@@ -367,27 +411,39 @@ Check out what happens when I run the HTML validator with this code inside it:
 </html>
 ```
 
-It yells at me about using a non-standard attribute -- one that doesn't come built-in-with HTML. You can 'fake out' the validator by putting `data-` in front of the attribute:
+It yells at me about using a non-standard attribute -- one that doesn't come
+built-in-with HTML. You can 'fake out' the validator by putting `data-` in
+front of the attribute:
 
 `<div data-my-custom-directive></div>`
 
-This doesn't affect the behavior of the attribute at all -- Angular just ignored the `data-`.
+This doesn't affect the behavior of the attribute at all -- Angular just ignored
+the `data-`.
 
-This is **good, standard practice** because it makes any custom HTML you created -- which could potentially disrupt other components on a page -- much more visible to other developers.
+This is **good, standard practice** because it makes any custom HTML you
+created -- which could potentially disrupt other components on a page -- much
+more visible to other developers.
 
-Similarly, the HTML validator doesn't like custom elements, and you **can't** just add `data-` before them to make them work. `<grumble>` doesn't validate, and neither does `<data-grumble>`. So `replace` makes it easier to keep your HTML validated.
+Similarly, the HTML validator doesn't like custom elements, and you **can't**
+just add `data-` before them to make them work. `<grumble>` doesn't validate,
+and neither does `<data-grumble>`. So `replace` makes it easier to keep your
+HTML validated.
 
 ### Writing HTML inside a Javascript file is kind of annoying
 
-Angular lets you put all the HTML inside a completely different file using `templateUrl` instead of `template`.
+Angular lets you put all the HTML inside a completely different file using
+`templateUrl` instead of `template`.
 
-First, make a file inside the `js/grumbles` folder called `_grumble_show.html`. Rails convention for partials is to put an underscore `_` at the beginning of their file name, so we may as well do that here. Inside it, put:
+First, make a file inside the `js/grumbles` folder called `_grumble_show.html`. 
+Rails convention for partials is to put an underscore `_` at the beginning of
+their file name, so we may as well do that here. Inside it, put:
 
 ```html
 <h1>Hi there, {{myName}}!</h1>
 ```
 
-Now, replace `template` in the directive's JS file with `templateUrl` and a link to the `_grumble_show.html` file *relative the main `index.html` file*:
+Now, replace `template` in the directive's JS file with `templateUrl` and a
+link to the `_grumble_show.html` file *relative the main `index.html` file*:
 
 ```js
 (function(){
@@ -407,11 +463,15 @@ Now, replace `template` in the directive's JS file with `templateUrl` and a link
 
 ## Making a more useful directive
 
-What I'd like to use for my template is the HTML that's used for showing the information about a grumble. That is: the HTML that's identical between `index` and `show`. We'll make a directive with this as a template.
+What I'd like to use for my template is the HTML that's used for showing the
+information about a grumble. That is: the HTML that's identical between `index`
+and `show`. We'll make a directive with this as a template.
 
 For now, we'll leave `show` alone and just get this working in `index`.
 
-Cut and paste into `_grumble_show.html` from `index.html` the HTML that you want to be repeated for each Grumble. Your `_grumble_show.html` should look something like this:
+Cut and paste into `_grumble_show.html` from `index.html` the HTML that you
+want to be repeated for each Grumble. Your `_grumble_show.html` should look
+something like this:
 
 ```html
 <div class="grumble">
@@ -423,7 +483,9 @@ Cut and paste into `_grumble_show.html` from `index.html` the HTML that you want
 
 ```
 
-The next step is to make `grumble` available inside the partial. If you look at the partial's HTML, there's a whole lot of `grumble.title` and `grumble.id` and so on. We need to 'pass in' that `grumble.`, which we can do with an attribute.
+The next step is to make `grumble` available inside the partial. If you look at
+the partial's HTML, there's a whole lot of `grumble.title` and `grumble.id` and
+so on. We need to 'pass in' that `grumble.`, which we can do with an attribute.
 
 In `index.html`, in the space left by all the HTML you cut out, put:
 
@@ -433,7 +495,8 @@ In `index.html`, in the space left by all the HTML you cut out, put:
 </div>
 ```
 
-Now I need to make that grumble available inside the partial's HTML. I do this by setting `scope.grumble` equal to the grumble we passed in via the attributes:
+Now I need to make that grumble available inside the partial's HTML. I do this
+by setting `scope.grumble` equal to the grumble we passed in via the attributes:
 
 ```js
 (function(){
@@ -453,7 +516,8 @@ Now I need to make that grumble available inside the partial's HTML. I do this b
 
 It didn't do anything! If we add `{{grumble}}` to the `index.html` all we get is the word 'grumble'.
 
-This is because `grumble` is an *object*. The `@` in `scope` is for passing strings. If you want to pass an object, use `=`.
+This is because `grumble` is an *object*. The `@` in `scope` is for passing
+strings. If you want to pass an object, use `=`.
 
 ```js
 (function(){
@@ -509,7 +573,8 @@ So let's correct how we call the directive in the show page to reference the cor
 
 ## You Do - the same for `edit` and `new`
 
-To start, create a new file for your directive. Maybe something like `js/grumbles/form.directive.js`. Add something like this:
+To start, create a new file for your directive. Maybe something like
+`js/grumbles/form.directive.js`. Add something like this:
 
 ```js
 (function(){
@@ -529,9 +594,11 @@ To start, create a new file for your directive. Maybe something like `js/grumble
 
 Put your partial in a file called `js/grumbles/_grumble_form.html`.
 
-**Note:** Don't worry about getting the 'Save' and 'New Grumble' buttons to work; just focus on getting the form to show up properly.
+**Note:** Don't worry about getting the 'Save' and 'New Grumble' buttons to
+work; just focus on getting the form to show up properly.
 
-**Note:** Your partial shouldn't have any references to controllers in it -- just `grumble`. Delete any references to controllers.
+**Note:** Your partial shouldn't have any references to controllers in it --
+just `grumble`. Delete any references to controllers.
 
 ### By the end:
 
@@ -566,9 +633,11 @@ Put your partial in a file called `js/grumbles/_grumble_form.html`.
 
 ### What about the buttons?
 
-We either have to have the Back/Save buttons or the 'New grumble' button or all three.
+We either have to have the Back/Save buttons or the 'New grumble' button or
+all three.
 
-Your best bet is to have all three, and then to show or hide particular buttons based on whether the user's on `new` or `edit`.
+Your best bet is to have all three, and then to show or hide particular buttons
+based on whether the user's on `new` or `edit`.
 
 ##### How might you conditionally hide buttons?
 
@@ -727,13 +796,15 @@ function grumbleForm($state, GrumbleFactory){
 }
 ```
 
-Going along in this vein, **we don't need to have controllers at all** for these views.
+Going along in this vein, **we don't need to have controllers at all** for
+these views.
 
 ### Skinny controllers
 
-Angular's all about having skinny controllers, in the same way that Rails likes skinny controllers and fat models.
+Angular's all about having skinny controllers, in the same way that Rails
+likes skinny controllers and fat models.
 
-My [completed version of this app](https://github.com/ga-dc/grumblr_angular/tree/gh-pages) has a grand total of one controller, used just to load all the Grumbles. Everything else is in directives.
+My [completed version of this app](https://github.com/ga-wdi-exercises/grumblr_angular/tree/gh-pages) has a grand total of one controller, used just to load all the Grumbles. Everything else is in directives.
 
 A 'soft' rule or guideline for when to use directives or controllers is:
 
