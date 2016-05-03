@@ -3,7 +3,36 @@
   <head>
     <title>Angular Directives</title>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js'></script>
+    <style media="screen">
+      body > h1 {
+        color: lemonchiffon;
+      }
+    </style>
+    <script type="text/javascript">
+      angular
+        .module('custom-directives',[])
+        .directive('helloWorld', function(){
+          return {
+            templateUrl: "_hello.html",
+            restrict: "E", // E A C M
+            replace: true,
+            scope: {
+              name: "@"
+            },
+            link: function(scope){
+              //scope.name = "Jesse"
+              scope.shout = function(){
+                alert("HELLO " + scope.name.toUpperCase());
+              }
+              console.log("directive created / used");
+            }
+          }
+        });
+    </script>
   </head>
-  <body>
+  <body ng-app="custom-directives">
+    <hello-world name="Jesse"></hello-world>
+    <hello-world name="Tyler"></hello-world>
+
   </body>
 </html>
